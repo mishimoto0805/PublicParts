@@ -1,0 +1,159 @@
+まだ、README.mbの作り方がわからないので、取説的なものでご勘弁。
+
+namespace は GitHub アカウントと同じ mishimoto0805 です。
+クラス名は Matrix としファイル名も Matrix.php としています。
+クラスのインスタンスは本文では下記の通り $Matrix としています。
+  $Matrix = new mishimoto0805\Matrix();
+本文では関数の説明ごとに記載していますが、関数を実行する命令文の前に1つ記載しておけば足ります。
+
+code:8503001
+  name:行列式の表示
+    関数名：displayMatrix($matrix);
+      m行n列の行列を単に表示させる関数です。
+      結果の簡易的に表示させるときなどにご利用ください。
+
+        例)$array = [[1,2,3],[4,5,6],[7,8,9]];
+        $Matrix = new mishimoto0805\Matrix();
+        $Matrix->displayMatrix($array);
+        結果）  1 2 3
+                4 5 6
+                7 8 9
+
+code:8503002
+  name:０行列の作成
+    関数名：zeroMatrix($line,$Column);
+      m行n列の行列の０行列を配列として返します。
+      $lineは行数,$Column列数
+      ただし引数は自然数以外の数値を代入すると、浮動小数点を場合は切り上げた数値を配列として値を返し、０以下の場合はエラーとしてnull値を返します
+
+        例）  $gyou  = 2;
+              $retsu = 4;
+              $Matrix = new mishimoto0805\Matrix();
+              var_dump($Matrix->zeroMatrix($gyou,$retsu));
+        結果）array(2) {
+                [0]=>array(4) {[0]=>int(0)[1]=>int(0)[2]=>int(0)[3]=>int(0)}
+                [1]=>array(4) {[0]=>int(0)[1]=>int(0)[2]=>int(0)[3]=>int(0)}
+              }
+
+code:8503003
+  name:単位行列の作成
+    関数名：identityMatrix($n);
+      引数$n次の単位行列を配列として値を返します。
+
+        例）$value = 4;
+            $Matrix = new mishimoto0805\Matrix();
+            var_dump($Matrix->identityMatrix($value));
+        結果）array(4) {
+                [1]=>array(4) {[1]=>int(1)[2]=>int(0)[3]=>int(0)[4]=>int(0)}
+                [2]=>array(4) {[1]=>int(0)[2]=>int(1)[3]=>int(0)[4]=>int(0)}
+                [3]=>array(4) {[1]=>int(0)[2]=>int(0)[3]=>int(1)[4]=>int(0)}
+                [4]=>array(4) {[1]=>int(0)[2]=>int(0)[3]=>int(0)[4]=>int(1)}
+              }
+
+code:8503004
+  name:行列の足し算
+    関数名：additionMatrix($matrixA,$matrixB);
+      ２つの行列の足し算をして配列として値を返します。
+      ただし、行列演算の特性により、対応する行列成分が合わない場合はエラーとしてnull値を返します。
+
+        例）$gyouretsuA =[[1,2,3],[4,5,6]];
+            $gyouretsuB =[[2,3,4],[5,6,7]];
+            $Matrix = new mishimoto0805\Matrix();
+            var_dump($Matrix->additionMatrix($gyouretsuA,$gyouretsuB));
+        結果）>array(2) {
+                [0]=>array(3) {[0]=>int(3)[1]=>int(5)[2]=>int(7)}
+                [1]=>array(3) {[0]=>int(9)[1]=>int(11)[2]=>int(13)}
+              }
+
+code:8503005
+  name:行列の引き算
+    関数名：subtractionMatrix($matrixA,$matrixB);
+      ２つの行列の引き算をして配列として値を返します。
+      ただし、行列演算の特性により、対応する行列成分が合わない場合はエラーとしてnull値を返します。
+        例）$gyouretsuA =[[1,2,3],[4,5,6]];
+            $gyouretsuB =[[2,3,4],[5,6,7]];
+            $Matrix = new mishimoto0805\Matrix();
+            var_dump($Matrix->subtractionMatrix($gyouretsuA,$gyouretsuB));
+        結果）array(2) {
+                [0]=>array(3) {[0]=>int(-1)[1]=>int(-1)[2]=>int(-1)}
+                [1]=>array(3) {[0]=>int(-1)[1]=>int(-1)[2]=>int(-1)}
+              }
+
+code:8503006
+  name:スカラー値と行列の掛け算
+    関数名：scalarMatrix($scalar,$matrix);
+      スカラー値と行列の掛け算をして配列として値を返します。
+        例）$kazan = 5;
+            $gyouretsu =[[1,2,3],[4,5,6]];
+            $Matrix = new mishimoto0805\Matrix();
+            var_dump($Matrix->scalarMatrix($kazan,$gyouretsu));
+        結果）array(2) {
+                [0]=>array(3) {[0]=>int(5)[1]=>int(10)[2]=>int(15)}
+                [1]=>array(3) {[0]=>int(20)[1]=>int(25)[2]=>int(30)}
+
+code:8503007
+  name:行列の掛け算
+    関数名：multiplicationMatrix($matrixA,$matrixB);
+      行列Ａと行列Ｂの掛け算をして配列として値を返します。-----例１）を参照
+      また行列Ａが１行ｎ列の場合は１(0)行１(0)列のスカラー値として値を返します。-----例２）を参照
+      行列Ａの列数と行列Ｂの行数が同じ値の場合のみ乗算が可能で、相違する場合ははエラーとしてnull値を返します。
+        例１）$gyouretsuA =[[9,8],[7,6],[5,4]];
+              $gyouretsuB =[[1,2,3],[4,5,6]];
+              $Matrix = new mishimoto0805\Matrix();
+              var_dump($Matrix->multiplicationMatrix($gyouretsuA,$gyouretsuB));
+        結果）array(3) {
+                [0]=>array(3) {[0]=>int(41)[1]=>int(58)[2]=>int(75)}
+                [1]=>array(3) {[0]=>int(31)[1]=>int(44)[2]=>int(57)}
+                [2]=>array(3) {[0]=>int(21)[1]=>int(30)[2]=>int(39)}
+              }
+        例２）$gyouretsuA =[[9,8,7,6,5]];
+              $gyouretsuB =[[0],[1],[2],[3],[4]];
+              $Matrix = new mishimoto0805\Matrix();
+              var_dump($Matrix->multiplicationMatrix($gyouretsuA,$gyouretsuB));
+        結果）array(1) {
+                [0]=> array(1) { [0]=> int(60) }
+              }
+
+code:8503008
+  name:逆行列の計算
+    関数名：inverseMatrix($matrix);
+      行列の逆行列を吹き出し法にて計算し配列として値を返します。------例１）を参照
+      また、入力した行列にその逆行列を掛けると単位行列になりますが、PHPの浮動小数点の端数処理誤差により、０及び１の数値に10の-15乗程度の誤差が生じてしまいます。------例２）を参照
+      なお、逆行列の解がない場合はエラーが出ますので本関数を利用してプログラムを作成する場合は、try関数等でエラーの対応をしてください。------例３）を参照
+        例１）$gyouretsu =[[8,5,3,4,5],[3,7,8,9,0],[6,1,6,6,7],[5,6,0,1,2],[8,3,6,5,9]];
+              $Matrix = new mishimoto0805\Matrix();
+              $Matrix->displayMatrix($Matrix->inverseMatrix($gyouretsu));
+        結果） 0.91311754684838  0.020442930153322 -0.65587734241908 -0.76149914821124  0.17206132879046
+              -0.40204429301533  0.035775127768313  0.10221465076661  0.41737649063032  0.051107325383305
+               0.64565587734242  0.20102214650767  -1.282793867121	 -0.98807495741056  0.85860306643952
+              -0.56558773424191 -0.10221465076661   1.2793867120954   0.80749574105622 -0.8603066439523
+              -0.793867120954   -0.10732538330494   0.69335604770017  0.74787052810903 -0.15332197614991
+
+        例２）$gyaku = $Matrix->inverseMatrix($gyouretsu);
+              $Matrix->displayMatrix($Matrix->multiplicationMatrix($gyaku,$gyouretsu));
+        結果） 1	                   0	                   4.4408920985006E-16	3.3306690738755E-16  6.6613381477509E-16
+               6.6613381477509E-16  1	                    7.2164496600635E-16  5.5511151231258E-16  4.4408920985006E-16
+               2.6645352591004E-15  2.6645352591004E-15   1	                   0                    8.8817841970013E-16
+               2.6645352591004E-15  2.6645352591004E-15   8.8817841970013E-16  1                    1.7763568394003E-15
+               2.2204460492503E-16 -1.1102230246252E-16   6.6613381477509E-16  3.3306690738755E-16  1
+
+        例３）$gyouretsu =[[1,2,3,4,5],[6,7,8,9,0],[3,4,5,6,7],[8,9,0,1,2],[5,6,7,8,9],];
+              $Matrix->displayMatrix($Matrix->inverseMatrix($gyouretsu));
+        結果）  Fatal error: Uncaught DivisionByZeroError: Division by zero in .........
+
+code:8503009
+  name:行列の転置
+    関数名：transposedMatrix($matrix);
+      入力した行列を転置します。
+        例）$gyouretsu =[[9,8,7,6],[5,4,3,2]];
+            $Matrix = new mishimoto0805\Matrix();
+            $Matrix->displayMatrix($gyouretsu);
+            $Matrix->displayMatrix($Matrix->transposedMatrix($gyouretsu));
+        結果）転置前
+              9 8 7 6
+              5 4	3	2
+              転置後
+              9 5
+              8 4
+              7 3
+              6 2
